@@ -77,25 +77,65 @@ function initializePageScripts(pageName) {
     }
 }
 
+/**
+ * Initializes the automated image slider on the home page with manual navigation controls.
+ */
 function initializeHomepageSlider() {
     const slides = document.getElementsByClassName("slide");
-    if (slides.length > 0) {
-        let slideIndex = 0;
-        const slideInterval = 4000;
-        
-        function showNextSlide() {
+    const prevBtn = document.querySelector(".prev-arrow");
+    const nextBtn = document.querySelector(".next-arrow");
+
+    // Safety Check: Only run if slides and buttons exist
+    if (slides.length > 0 && prevBtn && nextBtn) {
+        let slideIndex = 1; // Start at 1 for easier math
+        const slideInterval = 4000; // 4 seconds
+        let autoplayInterval = null;
+
+        // Core function to display a specific slide
+        function showSlide(n) {
+            // Handle wrapping around the slides
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+
+            // Hide all slides
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
-            slideIndex++;
-            if (slideIndex > slides.length) {
-                slideIndex = 1;
-            }
+
+            // Show the target slide
             slides[slideIndex - 1].style.display = "block";
         }
-        
-        showNextSlide(); // Show first slide immediately
-        setInterval(showNextSlide, slideInterval);
+
+        // Function for next/prev button clicks
+        function plusSlides(n) {
+            showSlide(slideIndex += n);
+        }
+
+        // Functions to control autoplay
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+        function startAutoplay() {
+            stopAutoplay(); // Ensure no multiple timers are running
+            autoplayInterval = setInterval(() => {
+                plusSlides(1); // Advance to the next slide
+            }, slideInterval);
+        }
+
+        // Add click listeners to the arrow buttons
+        prevBtn.addEventListener('click', () => {
+            stopAutoplay(); // Stop autoplay when user takes control
+            plusSlides(-1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            stopAutoplay(); // Stop autoplay when user takes control
+            plusSlides(1);
+        });
+
+        // Initialize the slider
+        showSlide(slideIndex); // Show the first slide immediately
+        startAutoplay(); // Start the automatic slideshow
     }
 }
 
