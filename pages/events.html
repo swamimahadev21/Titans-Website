@@ -1,0 +1,43 @@
+<!-- Events Page -->
+<section id="events-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+    <h2 class="text-4xl font-bold text-red-800 mb-6 text-center animate-slide-in-top">Upcoming & Past Events</h2>
+    
+    <div id="event-list-view">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+            <div class="md:col-span-1 animate-fade-in-right">
+                <h3 class="text-3xl font-semibold text-red-700 mb-4">All Events</h3>
+                <ul class="space-y-4" id="past-events-list">
+                    <li class="bg-red-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="0">
+                        <h4 class="text-xl font-bold text-red-600">Freshers Party</h4>
+                        <p class="text-gray-700">Date: July 04, 2025</p>
+                        <p class="text-gray-600">A vibrant welcome event for second-year students filled with fun, music, dance, and ice-breaking activities to foster camaraderie and department spirit.</p>
+                    </li>
+                    <li class="bg-red-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="1">
+                        <h4 class="text-xl font-bold text-red-600">Wall Painting Activity</h4>
+                        <p class="text-gray-700">Date: July 03, 2025</p>
+                        <p class="text-gray-600">A creative initiative to beautify the department walls through student-led artwork, promoting expression, collaboration, and visual storytelling.</p>
+                    </li>
+                    <li class="bg-red-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="2">
+                        <h4 class="text-xl font-bold text-red-600">Debate Competition for Second Year Students</h4>
+                        <p class="text-gray-700">Date: July 02, 2025</p>
+                        <p class="text-gray-600">An engaging debate competition designed for second-year students during their induction, fostering critical thinking and public speaking skills.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Detail View -->
+    <div id="event-detail-view" class="event-detail-view">
+        <button id="back-to-events-btn" class="mb-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+            &larr; Back to All Events
+        </button>
+        <h3 id="event-detail-title" class="text-4xl font-bold text-red-800 mb-4 animate-slide-in-top"></h3>
+        <p id="event-detail-date" class="text-lg text-gray-700 mb-4 animate-fade-in-up"></p>
+        <p id="event-detail-description" class="text-lg text-gray-700 leading-relaxed mb-8 animate-fade-in-up" style="animation-delay: 100ms;"></p>
+        
+        <div id="event-detail-images" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8">
+            <!-- Event-specific images will be loaded here by JS -->
+        </div>
+    </div>
+</section>

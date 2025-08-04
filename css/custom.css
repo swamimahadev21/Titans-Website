@@ -1,0 +1,118 @@
+/* Custom CSS for animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInTop { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeInBottom { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeInLeft { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes fadeInRight { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* Apply custom animations with Tailwind-like names */
+.animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+.animate-slide-in-top { animation: slideInTop 0.7s ease-out forwards; }
+.animate-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+.animate-fade-in-bottom { animation: fadeInBottom 0.7s ease-out forwards; }
+.animate-fade-in-left { animation: fadeInLeft 0.7s ease-out forwards; }
+.animate-fade-in-right { animation: fadeInRight 0.7s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
+
+/* General body styling */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page content elements are dynamically added/removed */
+.page-content {
+    animation-fill-mode: backwards;
+}
+
+/* Hide detail view by default */
+.event-detail-view {
+    display: none;
+}
+
+/* Styles for the custom popup message */
+.popup-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #22C55E; /* Green-500 */
+    color: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 1.25rem;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Custom styles for sub-tabs */
+.about-sub-nav-item, .students-corner-sub-nav-item, .committee-year-sub-nav-item {
+    position: relative;
+    padding: 1rem 2rem;
+    background-color: #f3f4f6; /* gray-100 */
+    color: #4b5563; /* gray-700 */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%);
+    margin-right: -1rem;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.about-sub-nav-item:last-child, .students-corner-sub-nav-item:last-child, .committee-year-sub-nav-item:last-child {
+    clip-path: none;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+.about-sub-nav-item.active, .students-corner-sub-nav-item.active, .committee-year-sub-nav-item.active {
+    background-color: #A60000;
+    color: white;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.about-sub-nav-item:hover:not(.active), .students-corner-sub-nav-item:hover:not(.active), .committee-year-sub-nav-item:hover:not(.active) {
+    background-color: #ef4444; /* red-500 */
+    color: white;
+}
+
+/* Responsive adjustments for sub-tabs */
+@media (max-width: 768px) {
+    .about-sub-nav-container, .students-corner-sub-nav-container, .committee-year-sub-nav-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .about-sub-nav-item, .students-corner-sub-nav-item, .committee-year-sub-nav-item {
+        clip-path: none;
+        margin-right: 0;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .about-sub-nav-item:last-child, .students-corner-sub-nav-item:last-child, .committee-year-sub-nav-item:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Homepage gradient shadow */
+.homepage-gradient-shadow {
+    position: relative;
+    overflow: hidden;
+}
+.homepage-gradient-shadow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(166, 0, 0, 0.4), transparent);
+    pointer-events: none;
+    z-index: 0;
+}
