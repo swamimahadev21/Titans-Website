@@ -1,43 +1,255 @@
-<!-- Events Page -->
-<section id="events-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
-    <h2 class="text-4xl font-bold text-red-800 mb-6 text-center animate-slide-in-top">Upcoming & Past Events</h2>
-    
-    <div id="event-list-view">
-        <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-            <div class="md:col-span-1 animate-fade-in-right">
-                <h3 class="text-3xl font-semibold text-red-700 mb-4">All Events</h3>
-                <ul class="space-y-4" id="past-events-list">
-                    <li class="bg-red-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="0">
-                        <h4 class="text-xl font-bold text-red-600">Freshers Party</h4>
-                        <p class="text-gray-700">Date: July 04, 2025</p>
-                        <p class="text-gray-600">A vibrant welcome event for second-year students filled with fun, music, dance, and ice-breaking activities to foster camaraderie and department spirit.</p>
-                    </li>
-                    <li class="bg-red-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="1">
-                        <h4 class="text-xl font-bold text-red-600">Wall Painting Activity</h4>
-                        <p class="text-gray-700">Date: July 03, 2025</p>
-                        <p class="text-gray-600">A creative initiative to beautify the department walls through student-led artwork, promoting expression, collaboration, and visual storytelling.</p>
-                    </li>
-                    <li class="bg-red-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="2">
-                        <h4 class="text-xl font-bold text-red-600">Debate Competition for Second Year Students</h4>
-                        <p class="text-gray-700">Date: July 02, 2025</p>
-                        <p class="text-gray-600">An engaging debate competition designed for second-year students during their induction, fostering critical thinking and public speaking skills.</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .font-roboto-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        /* Animation for content fade-in */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Styles for filter buttons to match the wireframe */
+        .filter-btn {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+            transition: all 0.2s ease-in-out;
+            text-align: center;
+        }
+        .filter-btn.active {
+            background-color: black;
+            color: white;
+        }
+
+        /* Styles for the image carousel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background-color: #e5e7eb;
+        }
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+        }
+        .carousel-image.active {
+            opacity: 1;
+        }
+        .carousel-empty-state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: #6b7280;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Main Header -->
+        <header class="mb-8 p-4 bg-[#800000]">
+            <h1 class="text-5xl font-extrabold text-white text-center tracking-wider">EVENTS</h1>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Left Column: What's Cooking -->
+            <section class="bg-white p-6 animate-fade-in">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 text-center tracking-widest font-roboto-mono">&lt;WHAT'S COOKING/&gt;</h2>
+                
+                <!-- Filters -->
+                <div class="border-2 border-black p-4 mb-6">
+                    <h3 class="text-lg font-semibold mb-3 text-center border-b-2 border-black pb-2">FILTER &gt;</h3>
+                    <div id="upcoming-filters" class="flex flex-col space-y-2">
+                        <button data-filter="sports" class="filter-btn w-full p-2 font-semibold">SPORTS</button>
+                        <button data-filter="cultural" class="filter-btn w-full p-2 font-semibold">CULTURAL</button>
+                        <button data-filter="technical" class="filter-btn w-full p-2 font-semibold">TECHNICAL</button>
+                    </div>
+                </div>
+
+                <!-- Image Carousel for Upcoming Events -->
+                <div id="upcoming-carousel" class="carousel-container border-4 border-black">
+                    <!-- Images will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Right Column: Past Events -->
+            <section class="bg-white p-6 animate-fade-in" style="animation-delay: 100ms;">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 text-center tracking-widest font-roboto-mono">&lt;PAST EVENTS/&gt;</h2>
+                
+                <!-- Filters -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="border-2 border-black p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-center border-b-2 border-black pb-2">FILTER &gt;</h3>
+                        <div id="past-year-filters" class="flex flex-col space-y-2">
+                            <button data-year="2025" class="filter-btn w-full p-2 font-semibold">2025</button>
+                            <button data-year="2024" class="filter-btn w-full p-2 font-semibold">2024</button>
+                            <button data-year="2023" class="filter-btn w-full p-2 font-semibold">2023</button>
+                        </div>
+                    </div>
+                    <div class="border-2 border-black p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-center border-b-2 border-black pb-2">FILTER &gt;</h3>
+                        <div id="past-type-filters" class="flex flex-col space-y-2">
+                            <button data-type="sports" class="filter-btn w-full p-2 font-semibold">SPORTS</button>
+                            <button data-type="technical" class="filter-btn w-full p-2 font-semibold">TECHNICAL</button>
+                            <button data-type="cultural" class="filter-btn w-full p-2 font-semibold">CULTURAL</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Image Carousel for Past Events -->
+                <div id="past-carousel" class="carousel-container border-4 border-black">
+                    <!-- Images will be inserted here -->
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Event Detail View -->
-    <div id="event-detail-view" class="event-detail-view">
-        <button id="back-to-events-btn" class="mb-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
-            &larr; Back to All Events
-        </button>
-        <h3 id="event-detail-title" class="text-4xl font-bold text-red-800 mb-4 animate-slide-in-top"></h3>
-        <p id="event-detail-date" class="text-lg text-gray-700 mb-4 animate-fade-in-up"></p>
-        <p id="event-detail-description" class="text-lg text-gray-700 leading-relaxed mb-8 animate-fade-in-up" style="animation-delay: 100ms;"></p>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- DATA ---
+        const allEvents = [
+            // Upcoming Events
+            { name: 'CodeFest 2025', date: '2025-09-15', type: 'technical', status: 'upcoming', images: ['https://placehold.co/600x450/3b82f6/ffffff?text=CodeFest+1', 'https://placehold.co/600x450/3b82f6/ffffff?text=CodeFest+2'] },
+            { name: 'Annual Sports Meet', date: '2025-10-05', type: 'sports', status: 'upcoming', images: ['https://placehold.co/600x450/16a34a/ffffff?text=Sports+Day+1', 'https://placehold.co/600x450/16a34a/ffffff?text=Sports+Day+2'] },
+            { name: 'Symphony Night', date: '2025-11-20', type: 'cultural', status: 'upcoming', images: ['https://placehold.co/600x450/8b5cf6/ffffff?text=Symphony+1'] },
+            { name: 'AI & ML Workshop', date: '2025-09-25', type: 'technical', status: 'upcoming', images: ['https://placehold.co/600x450/3b82f6/ffffff?text=AI+Workshop'] },
+
+            // Past Events
+            { name: 'Tech Summit 2024', date: '2024-05-10', type: 'technical', status: 'past', images: ['https://placehold.co/600x450/0ea5e9/ffffff?text=Tech+Summit+2024'] },
+            { name: 'Inter-Department Cricket 2024', date: '2024-04-22', type: 'sports', status: 'past', images: ['https://placehold.co/600x450/22c55e/ffffff?text=Cricket+2024+A', 'https://placehold.co/600x450/22c55e/ffffff?text=Cricket+2024+B'] },
+            { name: 'Drama Fest 2024', date: '2024-03-15', type: 'cultural', status: 'past', images: ['https://placehold.co/600x450/a855f7/ffffff?text=Drama+2024'] },
+            { name: 'Robotics Challenge 2023', date: '2023-11-01', type: 'technical', status: 'past', images: ['https://placehold.co/600x450/0ea5e9/ffffff?text=Robotics+2023+1', 'https://placehold.co/600x450/0ea5e9/ffffff?text=Robotics+2023+2'] },
+            { name: 'Marathon 2023', date: '2023-10-18', type: 'sports', status: 'past', images: ['https://placehold.co/600x450/22c55e/ffffff?text=Marathon+2023'] }
+        ];
+
+        // --- DOM REFERENCES ---
+        const upcomingCarousel = document.getElementById('upcoming-carousel');
+        const pastCarousel = document.getElementById('past-carousel');
+        const upcomingFilters = document.getElementById('upcoming-filters');
+        const pastYearFilters = document.getElementById('past-year-filters');
+        const pastTypeFilters = document.getElementById('past-type-filters');
+
+        // --- STATE ---
+        let upcomingFilterState = null;
+        let pastYearFilterState = null;
+        let pastTypeFilterState = null;
         
-        <div id="event-detail-images" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8">
-            <!-- Event-specific images will be loaded here by JS -->
-        </div>
-    </div>
-</section>
+        let upcomingIntervalId = null;
+        let pastIntervalId = null;
+
+        // --- CAROUSEL LOGIC ---
+        function setupCarousel(container, images) {
+            const intervalId = container.id === 'upcoming-carousel' ? upcomingIntervalId : pastIntervalId;
+            if (intervalId) clearInterval(intervalId);
+
+            container.innerHTML = ''; 
+            if (images.length === 0) {
+                container.innerHTML = '<div class="carousel-empty-state">No Events Found</div>';
+                return;
+            }
+
+            images.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = `carousel-image ${index === 0 ? 'active' : ''}`;
+                container.appendChild(img);
+            });
+
+            let currentIndex = 0;
+            const imageElements = container.querySelectorAll('.carousel-image');
+
+            function showImage(index) {
+                imageElements.forEach((img, i) => {
+                    img.classList.toggle('active', i === index);
+                });
+            }
+
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                showImage(currentIndex);
+            }
+
+            // Automatic sliding only
+            const newIntervalId = setInterval(nextImage, 3000); 
+            if (container.id === 'upcoming-carousel') {
+                upcomingIntervalId = newIntervalId;
+            } else {
+                pastIntervalId = newIntervalId;
+            }
+        }
+
+        // --- FILTERING LOGIC ---
+        function applyFilters() {
+            // Filter Upcoming Events
+            let upcomingEvents = allEvents.filter(e => e.status === 'upcoming');
+            if (upcomingFilterState) {
+                upcomingEvents = upcomingEvents.filter(e => e.type === upcomingFilterState);
+            }
+            const upcomingImages = upcomingEvents.flatMap(e => e.images);
+            setupCarousel(upcomingCarousel, upcomingImages);
+            
+            // Filter Past Events
+            let pastEvents = allEvents.filter(e => e.status === 'past');
+            if (pastYearFilterState) {
+                pastEvents = pastEvents.filter(e => new Date(e.date).getFullYear().toString() === pastYearFilterState);
+            }
+            if (pastTypeFilterState) {
+                pastEvents = pastEvents.filter(e => e.type === pastTypeFilterState);
+            }
+            const pastImages = pastEvents.flatMap(e => e.images);
+            setupCarousel(pastCarousel, pastImages);
+        }
+
+        // --- EVENT LISTENERS ---
+        function setupFilterListeners(container, stateUpdater, stateKey) {
+            container.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const filterValue = e.target.dataset[stateKey];
+                    
+                    if (e.target.classList.contains('active')) {
+                        e.target.classList.remove('active');
+                        stateUpdater(null);
+                    } else {
+                        container.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                        stateUpdater(filterValue);
+                    }
+                    applyFilters();
+                }
+            });
+        }
+
+        setupFilterListeners(upcomingFilters, (val) => upcomingFilterState = val, 'filter');
+        setupFilterListeners(pastYearFilters, (val) => pastYearFilterState = val, 'year');
+        setupFilterListeners(pastTypeFilters, (val) => pastTypeFilterState = val, 'type');
+
+        // --- INITIAL RENDER ---
+        applyFilters();
+    });
+    </script>
+</body>
+</html>
