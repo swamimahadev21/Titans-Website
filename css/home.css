@@ -1,0 +1,151 @@
+   /* General Styling */
+       
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #003366;
+        }
+
+        section {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: #fff;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-logo {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #003366;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .main-header {
+            background: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #003366;
+        }
+
+        .header-logo {
+            height: 60px;
+        }
+
+        .header-text {
+            text-align: center;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .header-text h2 {
+            margin: 5px 0;
+            font-size: 1.5em;
+        }
+
+        .header-text p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Recent Events Slider */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            height: 400px; /* Adjust height as needed */
+            margin: auto;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slide-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 51, 102, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* HOD Message & Video */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 8px;
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
