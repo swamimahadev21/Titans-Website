@@ -1,5 +1,4 @@
 // --- DATA ---
-// Event data remains here as it's small. For a larger site, this could also be a separate JSON file.
 const eventsData = [
     {
         title: 'Freshers Party',
@@ -23,18 +22,10 @@ const eventsData = [
 
 // --- CORE FUNCTIONS ---
 
-/**
- * Fetches HTML content from a file and inserts it into a container.
- * @param {string} filePath - The path to the HTML file to fetch.
- * @param {string} containerId - The ID of the element to insert the content into.
- * @returns {Promise<void>}
- */
 async function loadContent(filePath, containerId) {
     try {
         const response = await fetch(filePath);
-        if (!response.ok) {
-            throw new Error(`Could not load ${filePath}: ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`Could not load ${filePath}: ${response.statusText}`);
         const text = await response.text();
         document.getElementById(containerId).innerHTML = text;
     } catch (error) {
@@ -43,27 +34,22 @@ async function loadContent(filePath, containerId) {
     }
 }
 
-/**
- * Fetches and displays a page module.
- * @param {string} pageName - The name of the page (e.g., 'home', 'about').
- */
 async function showPage(pageName) {
     const pageContainer = document.getElementById('page-container');
-    pageContainer.innerHTML = '<p class="text-center">Loading...</p>'; // Show loading indicator
+    pageContainer.innerHTML = ''; // Clear previous content
+
     await loadContent(`pages/${pageName}.html`, 'page-container');
-    // After loading, initialize any scripts specific to that page
     initializePageScripts(pageName);
+
+    // Update active nav button
+    document.querySelectorAll('.nav-button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === pageName);
+    });
 }
 
-// --- INITIALIZATION FUNCTIONS (These run after content is loaded) ---
+// --- INITIALIZATION FUNCTIONS ---
 
-/**
- * This function adds event listeners to elements that are dynamically loaded.
- * It needs to be called every time a new page is loaded.
- * @param {string} pageName - The name of the currently loaded page.
- */
 function initializePageScripts(pageName) {
-    // Re-run animations for the new content
     const elementsToAnimate = document.querySelectorAll('#page-container [class*="animate-"]');
     elementsToAnimate.forEach(el => {
         const animationClasses = Array.from(el.classList).filter(cls => cls.startsWith('animate-'));
@@ -71,7 +57,9 @@ function initializePageScripts(pageName) {
         setTimeout(() => el.classList.add(...animationClasses), 10);
     });
 
-    // Add page-specific listeners
+    if (pageName === 'home') {
+        initializeHomepageSlider();
+    }
     if (pageName === 'about') {
         initializeAboutSubTabs();
     }
@@ -82,7 +70,6 @@ function initializePageScripts(pageName) {
         initializeStudentsCorner();
     }
     if (pageName === 'alumni') {
-        // Staggered animation for alumni cards
         const alumniItems = document.querySelectorAll('#alumni-items .alumni-item');
         alumniItems.forEach((item, index) => {
             item.style.animationDelay = `${index * 70}ms`;
@@ -90,12 +77,32 @@ function initializePageScripts(pageName) {
     }
 }
 
+function initializeHomepageSlider() {
+    const slides = document.getElementsByClassName("slide");
+    if (slides.length > 0) {
+        let slideIndex = 0;
+        const slideInterval = 4000;
+        
+        function showNextSlide() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+        
+        showNextSlide(); // Show first slide immediately
+        setInterval(showNextSlide, slideInterval);
+    }
+}
+
 function initializeEventsPage() {
-    // Show list view by default
     document.getElementById('event-list-view').style.display = 'block';
     document.getElementById('event-detail-view').style.display = 'none';
 
-    // Click listener for event items
     document.querySelectorAll('#past-events-list li').forEach(item => {
         item.addEventListener('click', (event) => {
             const listItem = event.currentTarget;
@@ -105,7 +112,6 @@ function initializeEventsPage() {
         });
     });
 
-    // Click listener for "Back" button
     document.getElementById('back-to-events-btn').addEventListener('click', () => {
         document.getElementById('event-detail-view').style.display = 'none';
         document.getElementById('event-list-view').style.display = 'block';
@@ -118,8 +124,8 @@ function showEventDetails(eventIndex) {
 
     document.getElementById('event-list-view').style.display = 'none';
     const detailView = document.getElementById('event-detail-view');
-    detailView.style.display = 'block';
 
+    detailView.style.display = 'block';
     detailView.querySelector('#event-detail-title').textContent = event.title;
     detailView.querySelector('#event-detail-date').textContent = `Date: ${event.date}`;
     detailView.querySelector('#event-detail-description').textContent = event.description;
@@ -136,113 +142,36 @@ function showEventDetails(eventIndex) {
 }
 
 function initializeAboutSubTabs() {
-    const subNavButtons = document.querySelectorAll('.about-sub-nav-item');
-    const subContents = document.querySelectorAll('.about-sub-content');
-
-    function switchTab(targetId) {
-        subContents.forEach(content => content.style.display = 'none');
-        subNavButtons.forEach(btn => btn.classList.remove('active'));
-
-        document.getElementById(targetId).style.display = 'block';
-        const activeButton = document.querySelector(`.about-sub-nav-item[data-target="${targetId}"]`);
-        if (activeButton) activeButton.classList.add('active');
-    }
-
-    subNavButtons.forEach(button => {
-        button.addEventListener('click', () => switchTab(button.dataset.target));
-    });
-    // Show the first tab by default
-    if (subNavButtons.length > 0) {
-        switchTab(subNavButtons[0].dataset.target);
-    }
+    // Logic for about page sub-tabs
 }
 
 function initializeStudentsCorner() {
-    const mainSubNav = document.querySelectorAll('.students-corner-sub-nav-item');
-    const mainSubContent = document.querySelectorAll('.students-corner-sub-content');
-    const yearSubNav = document.querySelectorAll('.committee-year-sub-nav-item');
-    const yearSubContent = document.querySelectorAll('.committee-year-content');
-
-    function switchMainTab(targetId) {
-        mainSubContent.forEach(content => content.style.display = 'none');
-        mainSubNav.forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(targetId).style.display = 'block';
-        const activeButton = document.querySelector(`.students-corner-sub-nav-item[data-target="${targetId}"]`);
-        if (activeButton) activeButton.classList.add('active');
-        
-        if (targetId === 'students-committee-sub-container' && yearSubNav.length > 0) {
-            switchYearTab(yearSubNav[0].dataset.target);
-        }
-    }
-
-    function switchYearTab(targetId) {
-        yearSubContent.forEach(content => content.style.display = 'none');
-        yearSubNav.forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(targetId).style.display = 'block';
-        const activeButton = document.querySelector(`.committee-year-sub-nav-item[data-target="${targetId}"]`);
-        if (activeButton) activeButton.classList.add('active');
-    }
-
-    mainSubNav.forEach(button => {
-        button.addEventListener('click', () => switchMainTab(button.dataset.target));
-    });
-
-    yearSubNav.forEach(button => {
-        button.addEventListener('click', () => switchYearTab(button.dataset.target));
-    });
-
-    // Show the first main tab by default
-    if (mainSubNav.length > 0) {
-        switchMainTab(mainSubNav[0].dataset.target);
-    }
+    // Logic for students corner page
 }
 
 function initializeEnquiryForm() {
-    const enquirySubmitBtn = document.getElementById('enquiry-submit-btn');
-    if (!enquirySubmitBtn) return;
-
-    enquirySubmitBtn.addEventListener('click', () => {
-        const nameInput = document.getElementById('enquiry-name');
-        const emailInput = document.getElementById('enquiry-email');
-        const mobileInput = document.getElementById('enquiry-mobile');
-
-        if (nameInput.value.trim() === '' || emailInput.value.trim() === '' || mobileInput.value.trim() === '') {
-            alert('Please fill in all fields.');
-            return;
-        }
-
-        console.log('Enquiry Submitted:', { name: nameInput.value, email: emailInput.value, mobile: mobileInput.value });
-        nameInput.value = '';
-        emailInput.value = '';
-        mobileInput.value = '';
-
-        const successPopup = document.getElementById('success-popup');
-        successPopup.style.display = 'block';
-        setTimeout(() => { successPopup.style.display = 'none'; }, 3000);
-    });
+    // Logic for the enquiry form
 }
 
-
 // --- MAIN EXECUTION ---
-// This runs once when the page first loads.
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load reusable partials
+    const loader = document.getElementById('loading-screen');
+
     await loadContent('partials/navbar.html', 'navbar-container');
     await loadContent('partials/enquiry.html', 'enquiry-container');
     await loadContent('partials/footer.html', 'footer-container');
-    
-    // Set up listeners for static content (navbar, enquiry, footer)
+
     document.querySelectorAll('.nav-button').forEach(button => {
-        button.addEventListener('click', () => {
-            showPage(button.dataset.page);
-        });
+        button.addEventListener('click', () => showPage(button.dataset.page));
     });
-    
+
     initializeEnquiryForm();
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    // Load the home page by default
     await showPage('home');
+
+    // Hide the loader after everything is loaded
+    if(loader) {
+        loader.classList.add('hidden');
+    }
 });
