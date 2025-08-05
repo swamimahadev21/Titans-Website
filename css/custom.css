@@ -117,6 +117,7 @@ body {
     z-index: 0;
 } */
 /* Custom CSS for animations */
+/* Custom CSS for animations */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideInTop { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 @keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -239,6 +240,9 @@ html {
 }
 
 body { margin-top: 0 !important; padding-top: 0 !important; }
+
+
+
 
 
 
