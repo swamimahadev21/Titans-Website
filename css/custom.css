@@ -124,4 +124,16 @@ body {
     pointer-events: none;
     z-index: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
+
+body { margin-top: 0 !important; padding-top: 0 !important; }
+
+.container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+
 
