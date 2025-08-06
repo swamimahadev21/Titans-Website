@@ -181,3 +181,32 @@
 .prev-arrow:hover, .next-arrow:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+/* --- NEW Styles for HOD Message Layout --- */
+
+.hod-image {
+  float: left; /* This is the key property that moves the image to the left */
+  width: 250px; /* Adjust the size of the image */
+  margin-right: 25px; /* Creates space between the image and the text */
+  margin-bottom: 10px; /* Creates space below the image */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* This is an important fix to ensure the section correctly wraps the floated image */
+.hod-message-section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* On mobile screens, we stack the image and text instead of floating */
+@media (max-width: 768px) {
+  .hod-image {
+    float: none; /* Disables the float */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px; /* Add more space below the image on mobile */
+  }
+}
