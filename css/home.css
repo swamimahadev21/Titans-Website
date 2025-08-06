@@ -140,7 +140,7 @@
         }
 
         .video-container iframe,
-        .video-container video {
+        .video-container img {
             position: absolute;
             top: 0;
             left: 0;
