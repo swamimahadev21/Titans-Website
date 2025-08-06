@@ -1,6 +1,8 @@
    /* General Styling */
        
-
+        body{
+    margin: top 79px; ;
+   }
 
         b{
             font-size:xx-large;
