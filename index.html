@@ -29,9 +29,65 @@
     <footer id="footer-container"></footer>
     
     <script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Select all the year navigation buttons
+    const yearNavButtons = document.querySelectorAll('.committee-year-sub-nav-item');
+    
+    // Select all the content panels for the different years
+    const yearContentPanels = document.querySelectorAll('.committee-year-content');
 
+    // Add a click event listener to each button
+    yearNavButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the ID of the target content div from the button's 'data-target' attribute
+            const targetId = this.getAttribute('data-target');
+            const targetPanel = document.getElementById(targetId);
+
+            // 1. Deactivate all buttons
+            yearNavButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 2. Hide all content panels
+            yearContentPanels.forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+            // 3. Activate the clicked button
+            this.classList.add('active');
+
+            // 4. Show the target content panel
+            // Since you are using a grid, we set display to 'grid' instead of 'block'
+            if (targetPanel) {
+                targetPanel.style.display = 'grid'; 
+            }
+        });
+    });
+
+    // Optional: Ensure the initially active tab's content is displayed correctly on page load.
+    // Your current HTML does this by default, but this makes it more robust.
+    const initiallyActiveButton = document.querySelector('.committee-year-sub-nav-item.active');
+    if (initiallyActiveButton) {
+        const initialTargetId = initiallyActiveButton.getAttribute('data-target');
+        const initialPanel = document.getElementById(initialTargetId);
+        
+        // Hide all panels first
+        yearContentPanels.forEach(panel => {
+            panel.style.display = 'none';
+        });
+
+        // Then show the correct one
+        if (initialPanel) {
+            // Your content uses a div with class="grid ...", so 'grid' is the correct display value.
+            initialPanel.style.display = 'grid'; 
+        }
+    }
+});
+</script>
 </body>
 </html>
+
 
 
 
