@@ -1,20 +1,20 @@
-<!--  Students Corner Page --->
+<!--  Students Corner Page 
 <section id="students-corner-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
     <h2 class="text-4xl font-bold text-red-800 mb-6 text-center animate-slide-in-top">Students Corner</h2>
 
-    <!-- Students Corner Sub-Navigation -->
+    <!-- Students Corner Sub-Navigation 
     <div class="students-corner-sub-nav-container flex flex-wrap justify-center mb-8 shadow-md rounded-lg overflow-hidden">
         <button class="students-corner-sub-nav-item active" data-target="students-works">STUDENT WORKS</button>
         <button class="students-corner-sub-nav-item" data-target="students-committee-sub-container">STUDENTS COMMITTEE</button>
     </div>
 
-    <!-- Student Works Content -->
+    <!-- Student Works Content 
     <div id="students-works" class="students-corner-sub-content">
         <h3 class="text-3xl font-bold text-red-700 mb-4 text-center animate-slide-in-left">Showcase of Student Artwork & Projects</h3>
         <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-8 text-center animate-fade-in-up">
             Explore the creative artwork, innovative projects, and achievements of our talented IT students.
         </p>
-        <!-- New Image Gallery Grid with direct declaration -->
+        <!-- New Image Gallery Grid with direct declaration 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="student-works-items">
             <div class="bg-red-50 rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 student-work-item animate-scale-in flex flex-col items-center justify-center p-2" style="animation-delay: 50ms;">
                 <img src="assets/a1.jpg" alt="Student Work 1" class="w-full h-auto object-contain max-h-64" onerror="this.onerror=null;this.src='https://placehold.co/300x300/A60000/FFFFFF?text=Image 1';">
@@ -79,20 +79,20 @@
         </div>
     </div>
 
-    <!-- Students Committee Content (Container for sub-years) -->
+    <!-- Students Committee Content (Container for sub-years) 
     <div id="students-committee-sub-container" class="students-corner-sub-content" style="display:none;">
         <h3 class="text-3xl font-bold text-red-700 mb-4 text-center animate-slide-in-top">Meet the Students Committee</h3>
         <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-8 text-center animate-fade-in-up">
             Meet the passionate TITANS (2024–2025) team leading our events and initiatives.
         </p>
 
-        <!-- Committee Year Sub-Navigation -->
+        <!-- Committee Year Sub-Navigation 
         <div class="committee-year-sub-nav-container flex flex-wrap justify-center mb-8 shadow-md rounded-lg overflow-hidden">
             <button id="committee-year-2024-25" class="committee-year-sub-nav-item active" data-target="committee-2024-25">2024-25</button>
             <button id="committee-year-2025-26" class="committee-year-sub-nav-item" data-target="committee-2025-26">2025-26</button>
         </div>
 
-        <!-- 2024-25 Committee Members -->
+        <!-- 2024-25 Committee Members 
         <div id="committee-2024-25" class="committee-year-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="students-committee-items-2024-25">
                 <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
@@ -193,7 +193,7 @@
             </div>
         </div>
 
-        <!-- 2025-26 Committee Members (Hidden by default) -->
+        <!-- 2025-26 Committee Members (Hidden by default) 
         <div id="committee-2025-26" class="committee-year-content" style="display:none;">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
@@ -505,9 +505,158 @@
             </div>
         </div>
     </div>
+</section> -->
+
+<section id="students-corner" class="page-content">
+    <!-- Students Corner Sub-Navigation -->
+    <div class="students-corner-sub-nav-container flex flex-wrap justify-center mb-8 shadow-md rounded-lg overflow-hidden">
+        <button class="students-corner-sub-nav-item" data-target="students-committee-sub-container">STUDENTS COMMITTEE</button>
+    </div>
+
+    <!-- Students Committee Content (Container for sub-years) -->
+    <div id="students-committee-sub-container" class="students-corner-sub-content" style="display:none;">
+        <h3 class="text-3xl font-bold text-red-700 mb-4 text-center animate-slide-in-top">Meet the Students Committee</h3>
+        <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-8 text-center animate-fade-in-up">
+            Meet the passionate TITANS (2024–2025) team leading our events and initiatives.
+        </p>
+
+        <!-- Committee Year Sub-Navigation -->
+        <div class="committee-year-sub-nav-container flex flex-wrap justify-center mb-8 shadow-md rounded-lg overflow-hidden">
+            <!-- Swapped buttons -->
+            <button id="committee-year-2025-26" class="committee-year-sub-nav-item" data-target="committee-2025-26">2025-26</button>
+            <button id="committee-year-2024-25" class="committee-year-sub-nav-item active" data-target="committee-2024-25">2024-25</button>
+        </div>
+
+        <!-- 2025-26 Committee Members (Now on top) -->
+        <div id="committee-2025-26" class="committee-year-content" style="display:none;">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="https://placehold.co/150x187/A60000/FFFFFF?text=2025-26+S1" alt="Student Committee Member 2025-26 S1" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">New Student 1 (25-26)</h3>
+                    <p class="text-gray-700 text-sm">President</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="https://placehold.co/150x187/A60000/FFFFFF?text=2025-26+S2" alt="Student Committee Member 2025-26 S2" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">New Student 2 (25-26)</h3>
+                    <p class="text-gray-700 text-sm">Vice President</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="https://placehold.co/150x187/A60000/FFFFFF?text=2025-26+S3" alt="Student Committee Member 2025-26 S3" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">New Student 3 (25-26)</h3>
+                    <p class="text-gray-700 text-sm">Secretary</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2024-25 Committee Members (Moved below) -->
+        <div id="committee-2024-25" class="committee-year-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="students-committee-items-2024-25">
+                <!-- All 2024-25 member cards here (unchanged from your code) -->
+                <!-- Example: -->
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/1.webp" alt="Student Committee Member 1" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">Atharva Sakhare</h3>
+                    <p class="text-gray-700 text-sm">PRESIDENT</p>
+                </div>
+                 <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/2.webp" alt="Student Committee Member 2" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">Bhoomika Whandhekar</h3>
+                    <p class="text-gray-700 text-sm">VICE PRESIDENT</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/3.webp" alt="Student Committee Member 3" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">Aryan Jathar</h3>
+                    <p class="text-gray-700 text-sm">SECRETARY</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/4.webp" alt="Student Committee Member 4" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">Prajyot Mane</h3>
+                    <p class="text-gray-700 text-sm">TREASURER</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/5.webp" alt="Student Committee Member 5" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">JANHAVI KALE</h3>
+                    <p class="text-gray-700 text-sm">PLACEMENT COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/6.webp" alt="Student Committee Member 6" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">VAISHNAVI JADHAV</h3>
+                    <p class="text-gray-700 text-sm">CULTURAL COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/7.webp" alt="Student Committee Member 7" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">SOUNDARYA PATIL</h3>
+                    <p class="text-gray-700 text-sm">CULTURAL COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/8.webp" alt="Student Committee Member 8" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">PRANJAL NALAWADE</h3>
+                    <p class="text-gray-700 text-sm">CULTURAL COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/9.webp" alt="Student Committee Member 9" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">HARSHADA TAVHARE</h3>
+                    <p class="text-gray-700 text-sm">SPORTS COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/10.webp" alt="Student Committee Member 10" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">SWAPNIL CHIKTE</h3>
+                    <p class="text-gray-700 text-sm">STAGE MANAGER</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/11.webp" alt="Student Committee Member 11" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">SOHAM DESHMUKH</h3>
+                    <p class="text-gray-700 text-sm">ANCHORING COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/12.webp" alt="Student Committee Member 12" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">ABDULDIYAN DESHMUKH</h3>
+                    <p class="text-gray-700 text-sm">ANCHORING COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/13.webp" alt="Student Committee Member 13" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">SHIVAM BAIRAGYA</h3>
+                    <p class="text-gray-700 text-sm">PHOTOGRAPHER</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/14.webp" alt="Student Committee Member 14" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">VAISHNAVI WAIKAR</h3>
+                    <p class="text-gray-700 text-sm">PHOTOGRAPHER</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/15.webp" alt="Student Committee Member 15" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">OMKAR GUNGE</h3>
+                    <p class="text-gray-700 text-sm">EVENT COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/16.webp" alt="Student Committee Member 16" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">MAHADEV SWAMI</h3>
+                    <p class="text-gray-700 text-sm">EVENT COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/17.webp" alt="Student Committee Member 17" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">SHRIKANT HUNDEKAR</h3>
+                    <p class="text-gray-700 text-sm">DISCIPLINE COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/18.webp" alt="Student Committee Member 18" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">UPASNA SHIMPI</h3>
+                    <p class="text-gray-700 text-sm">DISCIPLINE COORDINATOR</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="assets/19.webp" alt="Student Committee Member 19" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-xl font-semibold text-red-700">MOHANISH KULKARNI</h3>
+                    <p class="text-gray-700 text-sm">ADVERTISEMENT COORDINATOR</p>
+                </div>
+                <!-- Repeat all other members as per your original code -->
+                <!-- Bhoomika, Aryan, Prajyot, Janhavi, etc. -->
+            </div>
+        </div>
+    </div>
 </section>
 
             
+
 
 
 
