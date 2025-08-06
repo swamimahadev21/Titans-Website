@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Base styles for the page */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
         }
-        .font-roboto-mono {
-            font-family: 'Roboto Mono', monospace;
-        }
+
         /* Custom styles for select dropdown arrow */
         select {
             -webkit-appearance: none;
@@ -25,11 +24,8 @@
             background-size: 1.5em 1.5em;
             padding-right: 2.5rem;
         }
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+
+        /* --- Animations --- */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -38,14 +34,14 @@
             animation: fadeInUp 0.6s ease-out forwards;
         }
         
-        /* Event Grid Styles - Updated */
+        /* --- Event Grid & Card Styles --- */
         .events-grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 1rem;
-            min-height: 320px; /* Increased height to prevent layout shift */
-            transition: min-height 0.4s ease; /* Smooth height transition */
+            min-height: 320px; /* Prevents layout shift while loading */
         }
+
         .event-card {
             transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
             opacity: 0;
@@ -55,13 +51,15 @@
             opacity: 1;
             transform: scale(1);
         }
-        .event-card.clickable:hover, .event-card.clickable:focus {
-            transform: translateY(-5px) scale(1.03); /* Enhanced hover effect */
+
+        .event-card.clickable:hover, .event-card.clickable:focus-within {
+            transform: translateY(-5px) scale(1.03);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             outline: none;
+            cursor: pointer;
         }
 
-        /* Modal & Lightbox Styles */
+        /* --- Modal & Lightbox Styles --- */
         .modal {
             transition: opacity 0.3s ease, visibility 0.3s ease;
             opacity: 0;
@@ -78,20 +76,40 @@
         .modal.active .modal-content {
             transform: scale(1);
         }
+
+        /* --- Gallery Item Styles --- */
         .gallery-grid-item {
             opacity: 0;
             transform: scale(0.9);
             transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative; /* Needed for the overlay */
+            cursor: pointer;
+            overflow: hidden; /* Ensures overlay fits within rounded corners */
         }
         .gallery-grid-item.visible {
             opacity: 1;
             transform: scale(1);
         }
-        #lightbox-img {
-            transition: opacity 0.4s ease-in-out;
+        /* Style for the blue overlay and text */
+        .gallery-item-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(29, 78, 216, 0.85); /* Blue overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            color: white;
+            font-weight: bold;
+            font-size: 1.125rem; /* text-lg */
+            transition: background-color 0.3s ease;
         }
-        
-        /* Close button improved visibility */
+        .gallery-grid-item:hover .gallery-item-overlay {
+            background-color: rgba(29, 78, 216, 1); /* Darken overlay on hover */
+        }
+
+
         .close-button {
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 9999px;
@@ -103,73 +121,50 @@
             font-size: 1.5rem;
             line-height: 1;
         }
-
-        /* Ripple Effect */
-        .ripple-effect {
-            position: relative;
-            overflow: hidden;
-        }
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-        }
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
     </style>
 </head>
-<body>
+<body class="bg-gray-100">
 
     <!-- Main Header -->
     <header class="w-full bg-[#800000] shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <h1 class="text-5xl font-extrabold text-white text-center tracking-wider" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">EVENTS</h1>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center tracking-wider" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">EVENTS</h1>
         </div>
     </header>
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 md:p-8">
-        <!-- Main Content Grid -->
+        <!-- Main Content Grid: Two columns for upcoming and past events -->
         <main id="main-content" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             <!-- Left Column: Upcoming Events -->
-            <section class="bg-white p-6 animate-fade-in-up rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+            <section class="bg-white p-6 animate-fade-in-up rounded-lg shadow-md">
                 <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center tracking-wide">UPCOMING EVENTS</h2>
                 <div class="mb-6">
                     <label for="upcoming-filter-select" class="block text-sm font-medium text-gray-700 mb-2">Filter by Type</label>
-                    <div class="relative">
-                         <select id="upcoming-filter-select" class="w-full p-3 font-semibold bg-gray-50 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ripple-effect">
-                            <option value="all">All</option>
-                            <option value="sports">Sports</option>
-                            <option value="cultural">Cultural</option>
-                            <option value="technical">Technical</option>
-                        </select>
-                    </div>
+                    <select id="upcoming-filter-select" class="w-full p-3 font-semibold bg-gray-50 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        <option value="all">All Types</option>
+                        <option value="sports">Sports</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="technical">Technical</option>
+                    </select>
                 </div>
                 <div id="upcoming-events-grid" class="events-grid-container bg-gray-100 p-4 rounded-lg"></div>
             </section>
 
             <!-- Right Column: Past Events -->
-            <section class="bg-white p-6 animate-fade-in-up rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl" style="animation-delay: 150ms;">
+            <section class="bg-white p-6 animate-fade-in-up rounded-lg shadow-md" style="animation-delay: 150ms;">
                 <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center tracking-wide">PAST EVENTS</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label for="past-year-filter-select" class="block text-sm font-medium text-gray-700 mb-2">Filter by Year</label>
-                        <select id="past-year-filter-select" class="w-full p-3 font-semibold bg-gray-50 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ripple-effect">
+                        <select id="past-year-filter-select" class="w-full p-3 font-semibold bg-gray-50 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             <option value="all">All Years</option>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
+                            <!-- Year options will be populated by JavaScript -->
                         </select>
                     </div>
-                     <div>
+                    <div>
                         <label for="past-type-filter-select" class="block text-sm font-medium text-gray-700 mb-2">Filter by Type</label>
-                        <select id="past-type-filter-select" class="w-full p-3 font-semibold bg-gray-50 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ripple-effect">
+                        <select id="past-type-filter-select" class="w-full p-3 font-semibold bg-gray-50 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             <option value="all">All Types</option>
                             <option value="sports">Sports</option>
                             <option value="technical">Technical</option>
@@ -182,53 +177,48 @@
         </main>
     </div>
 
-    <!-- Photo Gallery Modal -->
+    <!-- Photo Gallery Modal: Hidden by default -->
     <div id="gallery-modal" class="modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-        <div class="modal-content w-full h-full flex flex-col">
-            <div class="flex-shrink-0 p-4 flex justify-between items-center">
-                <h2 id="gallery-title" class="text-2xl font-bold text-white"></h2>
+        <div class="modal-content bg-gray-900 rounded-lg shadow-2xl w-full h-full flex flex-col">
+            <div class="flex-shrink-0 p-4 flex justify-between items-center border-b border-gray-700">
+                <h2 id="gallery-title" class="text-xl md:text-2xl font-bold text-white"></h2>
                 <button id="close-gallery-btn" aria-label="Close gallery" class="close-button text-white font-bold hover:text-gray-300 transition hover:scale-110">&times;</button>
             </div>
-            <div id="gallery-grid" class="flex-grow w-full h-full overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8 pt-0"></div>
+            <div id="gallery-grid" class="flex-grow w-full h-full overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4 md:p-8" style="grid-auto-rows: minmax(150px, 1fr);"></div>
         </div>
     </div>
     
-    <!-- Lightbox Modal -->
+    <!-- Lightbox Modal: Hidden by default -->
     <div id="lightbox-modal" class="modal fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
-         <div class="modal-content max-w-full max-h-full flex items-center justify-center">
+         <div class="modal-content w-full h-full flex items-center justify-center relative">
             <button id="close-lightbox-btn" aria-label="Close image viewer" class="close-button absolute top-4 right-4 text-white font-bold hover:text-gray-300 transition hover:scale-110 z-20">&times;</button>
             <button id="lightbox-prev" aria-label="Previous image" class="absolute left-4 md:left-10 text-white text-4xl font-bold hover:text-gray-300 transition hover:bg-black/20 p-2 rounded-full z-20">‹</button>
             <button id="lightbox-next" aria-label="Next image" class="absolute right-4 md:right-10 text-white text-4xl font-bold hover:text-gray-300 transition hover:bg-black/20 p-2 rounded-full z-20">›</button>
-            <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain" alt="Enlarged event photo">
+            <img id="lightbox-img" src="" class="max-w-[90vw] max-h-[90vh] object-contain" alt="Enlarged event photo">
         </div>
     </div>
 
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- DATA ---
+        // --- DATA SOURCE ---
         const allEvents = [
-            // Upcoming Events - Now with single images
+            // UPCOMING EVENTS
             { name: 'CodeFest 2025', date: '2025-09-15', type: 'technical', status: 'upcoming', images: [`https://placehold.co/600x450/3b82f6/ffffff?text=CodeFest+2025`] },
             { name: 'Annual Sports Meet', date: '2025-10-05', type: 'sports', status: 'upcoming', images: [`https://placehold.co/600x450/16a34a/ffffff?text=Sports+Day`] },
             { name: 'Symphony Night', date: '2025-11-20', type: 'cultural', status: 'upcoming', images: [`https://placehold.co/600x450/8b5cf6/ffffff?text=Symphony+Night`] },
-            { name: 'AI & ML Workshop', date: '2025-09-25', type: 'technical', status: 'upcoming', images: [`https://placehold.co/600x450/3b82f6/ffffff?text=AI+Workshop`] },
-
-            // Past Events - Still with multiple images
-            { name: 'Tech Summit 2024', date: '2024-05-10', type: 'technical', status: 'past', images: Array.from({length: 14}, (_, i) => `https://placehold.co/600x450/0ea5e9/ffffff?text=Tech+Summit+2024+${i+1}`) },
-            { name: 'Inter-Department Cricket 2024', date: '2024-04-22', type: 'sports', status: 'past', images: Array.from({length: 18}, (_, i) => `https://placehold.co/600x450/22c55e/ffffff?text=Cricket+2024+${i+1}`) },
-            { name: 'Drama Fest 2024', date: '2024-03-15', type: 'cultural', status: 'past', images: Array.from({length: 12}, (_, i) => `https://placehold.co/600x450/a855f7/ffffff?text=Drama+2024+${i+1}`) },
-            { name: 'Robotics Challenge 2023', date: '2023-11-01', type: 'technical', status: 'past', images: Array.from({length: 16}, (_, i) => `https://placehold.co/600x450/0ea5e9/ffffff?text=Robotics+2023+${i+1}`) },
-            { name: 'Marathon 2023', date: '2023-10-18', type: 'sports', status: 'past', images: Array.from({length: 20}, (_, i) => `https://placehold.co/600x450/22c55e/ffffff?text=Marathon+2023+${i+1}`) }
+            
+            // PAST EVENTS (with multiple images for galleries)
+            { name: 'Tech Summit 2024', date: '2024-05-10', type: 'technical', status: 'past', images: Array.from({length: 14}, (_, i) => `https://placehold.co/600x450/0ea5e9/ffffff?text=Tech+Summit+2024+Img+${i+1}`) },
+            { name: 'Cricket Tournament 2024', date: '2024-04-22', type: 'sports', status: 'past', images: Array.from({length: 18}, (_, i) => `https://placehold.co/600x450/22c55e/ffffff?text=Cricket+2024+Img+${i+1}`) },
+            { name: 'Drama Fest 2024', date: '2024-03-15', type: 'cultural', status: 'past', images: Array.from({length: 12}, (_, i) => `https://placehold.co/600x450/a855f7/ffffff?text=Drama+2024+Img+${i+1}`) },
+            { name: 'Robotics Challenge 2023', date: '2023-11-01', type: 'technical', status: 'past', images: Array.from({length: 16}, (_, i) => `https://placehold.co/600x450/0ea5e9/ffffff?text=Robotics+2023+Img+${i+1}`) }
         ];
 
         // --- DOM REFERENCES ---
         const mainContent = document.getElementById('main-content');
         const upcomingEventsGrid = document.getElementById('upcoming-events-grid');
         const pastEventsGrid = document.getElementById('past-events-grid');
-        const upcomingFilterSelect = document.getElementById('upcoming-filter-select');
-        const pastYearFilterSelect = document.getElementById('past-year-filter-select');
-        const pastTypeFilterSelect = document.getElementById('past-type-filter-select');
         const galleryModal = document.getElementById('gallery-modal');
         const galleryGrid = document.getElementById('gallery-grid');
         const galleryTitle = document.getElementById('gallery-title');
@@ -238,80 +228,68 @@
         const closeLightboxBtn = document.getElementById('close-lightbox-btn');
         const lightboxPrev = document.getElementById('lightbox-prev');
         const lightboxNext = document.getElementById('lightbox-next');
+        const upcomingFilterSelect = document.getElementById('upcoming-filter-select');
+        const pastYearFilterSelect = document.getElementById('past-year-filter-select');
+        const pastTypeFilterSelect = document.getElementById('past-type-filter-select');
 
-        // --- STATE ---
-        let upcomingFilterState = 'all';
-        let pastYearFilterState = 'all';
-        let pastTypeFilterState = 'all';
+        // --- STATE MANAGEMENT ---
         let lightboxImages = [];
         let currentLightboxIndex = 0;
         let previouslyFocusedElement = null;
+        let upcomingFilterState = 'all';
+        let pastYearFilterState = 'all';
+        let pastTypeFilterState = 'all';
         
         // --- RENDER EVENT CARDS ---
         function renderEvents(container, events) {
-            const existingCards = Array.from(container.children);
-            existingCards.forEach(card => card.classList.remove('visible'));
+            container.innerHTML = ''; 
+            if (events.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-500 w-full col-span-full py-10">No Events Found</p>`;
+                return;
+            }
 
-            setTimeout(() => {
-                container.innerHTML = ''; 
-                if (events.length === 0) {
-                    const emptyMessage = document.createElement('p');
-                    emptyMessage.className = 'text-center text-gray-500 w-full col-span-full';
-                    emptyMessage.textContent = 'No Events Found';
-                    container.appendChild(emptyMessage);
-                    return;
+            events.forEach(event => {
+                const card = document.createElement('div');
+                const isClickable = event.status === 'past';
+                card.className = `event-card bg-white rounded-lg overflow-hidden shadow-sm ${isClickable ? 'clickable' : ''}`;
+                card.dataset.eventName = event.name;
+                if (isClickable) {
+                    card.setAttribute('role', 'button');
+                    card.setAttribute('tabindex', '0');
                 }
+                card.innerHTML = `
+                    <div class="relative pt-[75%]">
+                        <img src="${event.images[0]}" alt="${event.name}" class="w-full h-full object-cover absolute top-0 left-0" onerror="this.onerror=null;this.src='https://placehold.co/600x450/cccccc/ffffff?text=Image+Not+Found';">
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-md truncate">${event.name}</h3>
+                        <p class="text-sm text-gray-600">${event.date}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
 
-                events.forEach(event => {
-                    const card = document.createElement('div');
-                    const isClickable = event.status === 'past';
-                    card.className = `event-card bg-white rounded-lg overflow-hidden shadow-sm ${isClickable ? 'clickable cursor-pointer' : ''}`;
-                    card.dataset.eventName = event.name;
-                    
-                    if (isClickable) {
-                        card.setAttribute('role', 'button');
-                        card.setAttribute('tabindex', '0');
-                    }
-
-                    card.innerHTML = `
-                        <img src="${event.images[0]}" alt="${event.name}" class="w-full h-32 object-cover ${isClickable ? 'pointer-events-none' : ''}" onerror="this.onerror=null;this.src='https://placehold.co/600x450/cccccc/ffffff?text=Image+Not+Found';">
-                        <div class="p-3 ${isClickable ? 'pointer-events-none' : ''}">
-                            <h3 class="font-bold text-md truncate">${event.name}</h3>
-                            <p class="text-sm text-gray-600">${event.date}</p>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-
-                const newCards = container.querySelectorAll('.event-card');
-                newCards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 80); 
-                });
-
-            }, 300); 
+            const newCards = container.querySelectorAll('.event-card');
+            newCards.forEach((card, index) => {
+                setTimeout(() => card.classList.add('visible'), index * 80); 
+            });
         }
 
-        // --- FOCUS TRAPPING ---
+        // --- FOCUS TRAPPING (Accessibility) ---
         function trapFocus(modal) {
             previouslyFocusedElement = document.activeElement;
-            const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const focusableElements = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
             const firstFocusableElement = focusableElements[0];
             const lastFocusableElement = focusableElements[focusableElements.length - 1];
-            
             firstFocusableElement?.focus();
-
             modal.addEventListener('keydown', function(e) {
-                const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-                if (!isTabPressed) return;
-
-                if (e.shiftKey) { // Shift + Tab
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey) {
                     if (document.activeElement === firstFocusableElement) {
                         lastFocusableElement.focus();
                         e.preventDefault();
                     }
-                } else { // Tab
+                } else {
                     if (document.activeElement === lastFocusableElement) {
                         firstFocusableElement.focus();
                         e.preventDefault();
@@ -319,35 +297,39 @@
                 }
             });
         }
-
         function releaseFocus() {
             previouslyFocusedElement?.focus();
         }
 
         // --- GALLERY & LIGHTBOX LOGIC ---
         function openGallery(eventData) {
+            galleryGrid.innerHTML = ''; 
             galleryTitle.textContent = eventData.name;
-            const images = eventData.images;
-            galleryGrid.innerHTML = '';
-            if (images.length === 0) {
-                galleryGrid.innerHTML = '<p class="text-white text-center col-span-full">No images to display for this event.</p>';
-            } else {
-                images.forEach((src, index) => {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'gallery-grid-item w-full h-full bg-gray-700 rounded-lg overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105';
-                    const img = document.createElement('img');
-                    img.src = src;
-                    img.className = 'w-full h-full object-cover';
-                    img.onerror = "this.onerror=null;this.src='https://placehold.co/600x450/cccccc/ffffff?text=Image+Not+Found';"
-                    img.dataset.index = index;
-                    img.setAttribute('tabindex', '0');
-                    img.setAttribute('role', 'button');
-                    imgContainer.appendChild(img);
-                    galleryGrid.appendChild(imgContainer);
-                    setTimeout(() => imgContainer.classList.add('visible'), index * 50);
-                });
-                lightboxImages = images;
-            }
+            
+            eventData.images.forEach((src, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'gallery-grid-item rounded-lg';
+                imgContainer.dataset.index = index;
+                imgContainer.setAttribute('tabindex', '0');
+                imgContainer.setAttribute('role', 'button');
+                imgContainer.setAttribute('aria-label', `View image ${index + 1} for ${eventData.name}`);
+
+                imgContainer.style.backgroundImage = `url('${src}')`;
+                imgContainer.style.backgroundSize = 'cover';
+                imgContainer.style.backgroundPosition = 'center';
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'gallery-item-overlay';
+                // FIX: Updated text to match user's screenshot format
+                overlay.textContent = `${eventData.name} Img ${index + 1}`;
+                
+                imgContainer.appendChild(overlay);
+                galleryGrid.appendChild(imgContainer);
+                
+                setTimeout(() => imgContainer.classList.add('visible'), index * 40);
+            });
+
+            lightboxImages = eventData.images;
             galleryModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             trapFocus(galleryModal);
@@ -357,86 +339,76 @@
             galleryModal.classList.remove('active');
             document.body.style.overflow = '';
             releaseFocus();
+            // FIX: Fully reset lightbox state on gallery close to prevent errors
+            lightboxImages = [];
+            currentLightboxIndex = 0;
         }
 
         function openLightbox(index) {
             currentLightboxIndex = index;
-            lightboxImg.style.opacity = '0';
-            setTimeout(() => {
-                lightboxImg.src = lightboxImages[currentLightboxIndex];
-                lightboxImg.style.opacity = '1';
-            }, 200);
+            lightboxImg.src = lightboxImages[currentLightboxIndex];
             lightboxModal.classList.add('active');
             trapFocus(lightboxModal);
         }
 
         function closeLightbox() {
             lightboxModal.classList.remove('active');
-            galleryModal.querySelector(`[data-index="${currentLightboxIndex}"]`)?.focus();
-        }
-
-        function showNextLightboxImage() {
-            currentLightboxIndex = (currentLightboxIndex + 1) % lightboxImages.length;
-            lightboxImg.style.opacity = '0';
-            setTimeout(() => {
-                lightboxImg.src = lightboxImages[currentLightboxIndex];
-                lightboxImg.style.opacity = '1';
-            }, 200);
-        }
-
-        function showPrevLightboxImage() {
-            currentLightboxIndex = (currentLightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
-            lightboxImg.style.opacity = '0';
-            setTimeout(() => {
-                lightboxImg.src = lightboxImages[currentLightboxIndex];
-                lightboxImg.style.opacity = '1';
-            }, 200);
+            // FIX: Return focus to a stable element (gallery close button) for reliability
+            closeGalleryBtn.focus();
         }
 
         // --- FILTERING LOGIC ---
         function applyFilters() {
-            let upcomingEvents = allEvents.filter(e => e.status === 'upcoming');
+            // Filter upcoming events
+            let filteredUpcoming = allEvents.filter(e => e.status === 'upcoming');
             if (upcomingFilterState !== 'all') {
-                upcomingEvents = upcomingEvents.filter(e => e.type === upcomingFilterState);
+                filteredUpcoming = filteredUpcoming.filter(e => e.type === upcomingFilterState);
             }
-            renderEvents(upcomingEventsGrid, upcomingEvents);
-            
-            let pastEvents = allEvents.filter(e => e.status === 'past');
+            renderEvents(upcomingEventsGrid, filteredUpcoming);
+
+            // Filter past events
+            let filteredPast = allEvents.filter(e => e.status === 'past');
             if (pastYearFilterState !== 'all') {
-                pastEvents = pastEvents.filter(e => new Date(e.date).getFullYear().toString() === pastYearFilterState);
+                filteredPast = filteredPast.filter(e => new Date(e.date).getFullYear().toString() === pastYearFilterState);
             }
             if (pastTypeFilterState !== 'all') {
-                pastEvents = pastEvents.filter(e => e.type === pastTypeFilterState);
+                filteredPast = filteredPast.filter(e => e.type === pastTypeFilterState);
             }
-            renderEvents(pastEventsGrid, pastEvents);
+            renderEvents(pastEventsGrid, filteredPast);
         }
 
-        // --- RIPPLE EFFECT LOGIC ---
-        function createRipple(event) {
-            const button = event.currentTarget;
-            const circle = document.createElement("span");
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
+        // --- INITIALIZATION ---
+        function initializePage() {
+            // Dynamically populate the year filter based on data
+            const years = [...new Set(allEvents.filter(e => e.status === 'past').map(e => new Date(e.date).getFullYear()))];
+            years.sort((a, b) => b - a);
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                pastYearFilterSelect.appendChild(option);
+            });
 
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - (button.offsetLeft + radius)}px`;
-            circle.style.top = `${event.clientY - (button.offsetTop + radius)}px`;
-            circle.classList.add("ripple");
-
-            const ripple = button.getElementsByClassName("ripple")[0];
-            if (ripple) ripple.remove();
-            button.appendChild(circle);
+            // Apply default filters to render the initial view
+            applyFilters();
         }
 
         // --- EVENT LISTENERS ---
-        document.querySelectorAll('.ripple-effect').forEach(button => {
-            button.addEventListener("click", createRipple);
+        // Listen for changes on the filter dropdowns
+        upcomingFilterSelect.addEventListener('change', (e) => {
+            upcomingFilterState = e.target.value;
+            applyFilters();
         });
-        
-        upcomingFilterSelect.addEventListener('change', (e) => { upcomingFilterState = e.target.value; applyFilters(); });
-        pastYearFilterSelect.addEventListener('change', (e) => { pastYearFilterState = e.target.value; applyFilters(); });
-        pastTypeFilterSelect.addEventListener('change', (e) => { pastTypeFilterState = e.target.value; applyFilters(); });
+        pastYearFilterSelect.addEventListener('change', (e) => {
+            pastYearFilterState = e.target.value;
+            applyFilters();
+        });
+        pastTypeFilterSelect.addEventListener('change', (e) => {
+            pastTypeFilterState = e.target.value;
+            applyFilters();
+        });
 
+        // Main listener for clicking on event cards
         mainContent.addEventListener('click', (e) => {
             const card = e.target.closest('.event-card.clickable');
             if (card) {
@@ -457,8 +429,13 @@
             }
         });
 
+        // Listeners for closing the gallery
         closeGalleryBtn.addEventListener('click', closeGallery);
-        galleryModal.addEventListener('click', (e) => { if (e.target.id === 'gallery-modal') closeGallery(); });
+        galleryModal.addEventListener('click', (e) => {
+            if (e.target.id === 'gallery-modal') closeGallery();
+        });
+
+        // Listeners for opening the lightbox from within the gallery
         galleryGrid.addEventListener('click', (e) => {
             const target = e.target.closest('[data-index]');
             if (target) openLightbox(parseInt(target.dataset.index));
@@ -473,21 +450,24 @@
             }
         });
 
+        // Listeners for lightbox controls
         closeLightboxBtn.addEventListener('click', closeLightbox);
-        lightboxNext.addEventListener('click', showNextLightboxImage);
-        lightboxPrev.addEventListener('click', showPrevLightboxImage);
+        lightboxNext.addEventListener('click', () => openLightbox((currentLightboxIndex + 1) % lightboxImages.length));
+        lightboxPrev.addEventListener('click', () => openLightbox((currentLightboxIndex - 1 + lightboxImages.length) % lightboxImages.length));
+        
+        // Keyboard navigation for modals
         document.addEventListener('keydown', (e) => {
             if (lightboxModal.classList.contains('active')) {
-                if (e.key === 'ArrowRight') showNextLightboxImage();
-                if (e.key === 'ArrowLeft') showPrevLightboxImage();
+                if (e.key === 'ArrowRight') lightboxNext.click();
+                if (e.key === 'ArrowLeft') lightboxPrev.click();
                 if (e.key === 'Escape') closeLightbox();
             } else if (galleryModal.classList.contains('active') && e.key === 'Escape') {
                 closeGallery();
             }
         });
 
-        // --- INITIAL RENDER ---
-        applyFilters();
+        // --- START THE APP ---
+        initializePage();
     });
     </script>
 </body>
