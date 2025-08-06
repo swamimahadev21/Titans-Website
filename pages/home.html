@@ -81,9 +81,10 @@
     
 
 
-</section>-->
+</section>
 
- <!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -137,9 +138,9 @@
     
     <header id="navbar-container"></header>
    
-    <main id="page-container" class="container mx-auto p-6 md:p-8">
+    <main id="page-container" class=" p-6 md:p-8">
         </main>
- <main class="container">
+ <main class="w-full">
   <div class="slider-container">
     <div class="slide fade">
         <img src="assets\s1_11zon.jpg" alt="Event 1">
@@ -169,9 +170,9 @@
     
 <div style="width:100%;height: 250px; text-align:center;line-height:250px">
             <h1><b class="bold">Shaping Future With TITANS</b></h1>
-<!--          <p>TITANS is the official student committee of the IT Department at TCOER. We're a team of passionate 
+          <p>TITANS is the official student committee of the IT Department at TCOER. We're a team of passionate 
          students working together to organize events, workshops, and initiatives that promote learning, leadership,
-          and collaboration. From tech fests to fun activities, TITANS is all about growing together, beyond the classroom.</p> -->
+          and collaboration. From tech fests to fun activities, TITANS is all about growing together, beyond the classroom.</p> 
         </div>
       <section class="hod-message-section">
        <center><h1><b class="bold">A Word from the HOD, Information Technology
@@ -195,7 +196,7 @@ I am confident that the association will continue to thrive and inspire a legacy
 </section>
             
     <section id="about-department" style="padding-left: 50px; padding-right: 0px; background-color: white; padding-top: 5px; padding-bottom: 0px;">
-    <div class="container mx-auto px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">About Our Department</h2>
             <p class="mt-4 text-lg text-gray-600">
@@ -247,7 +248,193 @@ I am confident that the association will continue to thrive and inspire a legacy
 
 
 </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITANS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+    <style>
+        /* Add padding to the body to prevent the fixed header from overlapping content */
+        body {
+            /* This value should be roughly the height of your fixed header */
+            /* e.g., padding-top: 80px; */
+        }
+
+        .popup-message {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-content {
+            animation: marquee 30s linear infinite;
+        }
+
+        .image-banner {
+            background-image: url('https://placehold.co/1920x600/a60000/ffffff?text=Your+Banner+Image');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Styles for HOD section - can be moved to custom.css */
+        .hod-message-section .hod-image {
+            float: left;
+            margin-right: 2rem;
+            margin-bottom: 1rem;
+            width: 250px; /* Example size */
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+        
+        /* Clearfix for the container holding the floated image */
+        .hod-message-section .content-wrapper::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-red-50 font-sans text-gray-900;">
+
+    <header id="navbar-container" class="fixed top-0 left-0 w-full z-50 shadow-lg">
+        <div id="navbar-bg" class="absolute inset-0 w-full h-full bg-white/10 transition-colors duration-300"></div>
+        </header>
+
+    <main class="w-full">
+
+        <div class="slider-container">
+            <div class="slide fade">
+                <img src="assets/s1_11zon.jpg" alt="Event 1" class="w-full object-cover">
+                <div class="slide-text">Glimpses of IT department</div>
+            </div>
+            <div class="slide fade">
+                <img src="assets/s2_11zon.jpg" alt="Event 2" class="w-full object-cover">
+                <div class="slide-text">Glimpses of IT department</div>
+            </div>
+            <div class="slide fade">
+                <img src="assets/s3_11zon.jpg" alt="Event 3" class="w-full object-cover">
+                <div class="slide-text">Glimpses of IT department</div>
+            </div>
+            <div class="slide fade">
+                <img src="assets/s4_11zon.jpg" alt="Event 4" class="w-full object-cover">
+                <div class="slide-text">Glimpses of IT department</div>
+            </div>
+            <div class="slide fade">
+                <img src="assets/s5_11zon.jpg" alt="Event 5" class="w-full object-cover">
+                <div class="slide-text">Glimpses of IT department</div>
+            </div>
+            <a class="prev-arrow">&#10094;</a>
+            <a class="next-arrow">&#10095;</a>
+        </div>
+
+        <section class="w-full py-12 md:py-16 bg-red-100/50">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight"><b class="bold">Shaping Future With TITANS</b></h1>
+            </div>
+        </section>
+
+        <section class="w-full py-16 md:py-20 hod-message-section bg-white">
+             <div class="max-w-5xl mx-auto px-6 lg:px-8 content-wrapper">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight text-center mb-12"><b class="bold">A Word from the HOD, Information Technology</b></h1>
+                <img src="assets/HEAD.jpg" alt="Head of Department" class="hod-image">
+                <div class="text-gray-700 text-justify">
+                    <p>
+                        "It gives me immense pleasure to witness the remarkable growth and continued success of the <b>Titans</b> Students Association, the official student body of the Department of Information Technology.<br><br>
+                        The association stands as a vibrant platform where students not only exhibit their technical acumen but also cultivate essential life skills such as leadership, teamwork, and organizational competence. At the Department of Information Technology, we remain committed to nurturing talent beyond the boundaries of the classroom. We encourage our students to explore their creative and technical potential through diverse opportunities.<br><br>
+                        Through a well-rounded blend of seminars, workshops, technical events, and community-driven initiatives, the Titan Students Association fosters a culture of innovation, collaboration, and holistic development. I am immensely proud of the dedication, enthusiasm, and collaborative spirit shown by our students and faculty coordinators in making every initiative a success.<br><br>
+                        I am confident that the association will continue to thrive and inspire a legacy of excellence in the years to come. I extend my best wishes to the Titans Students Association for all its future endeavors."<br>
+                    </p>
+                    <div class="mt-6">
+                        <p class="font-black text-lg">Dr. Vilas Gaikwad</p>
+                        <p class="text-red-700 font-semibold">Qualification: PhD.(CSE), M.Tech(CSE), BE(CSE)</p>
+                        <p class="font-semibold">Head of the Department-Information Technology</p>
+                        <p class="font-semibold">Trinity College of Engineering and Research</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-department" class="w-full py-16 md:py-20 bg-red-50">
+             <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">About Our Department</h2>
+                    <p class="mt-4 text-lg text-gray-600">
+                        Discover the mission, vision, and values that guide our team toward innovation and excellence.
+                    </p>
+                </div>
+                <div class="mt-16 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="prose lg:prose-lg max-w-none text-gray-700">
+                        <h3 class="text-2xl font-bold text-gray-800">Our Mission</h3>
+                        <p>
+                            Our mission is to deliver secure, scalable, and forward-thinking technology solutions that drive efficiency and innovation.
+                        </p>
+                        <h3 class="text-2xl font-bold mt-8 text-gray-800">Our Vision</h3>
+                        <p>
+                            To create a world-class digital ecosystem at Trinity Collage of Engg & Research where technology is invisible yet indispensable, providing every employee with a secure, intuitive, and powerful platform to achieve their best work from anywhere, at any time.
+                        </p>
+                    </div>
+                    <div class="flex justify-center">
+                        <img class="rounded-lg shadow-xl object-cover w-full max-w-md h-auto" src="https://placehold.co/600x400/ffe4e6/c0392b?text=Our+Team" alt="A snapshot of the department team or office" onerror="this.onerror=null;this.src='https://placehold.co/600x400';">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="success-popup" class="popup-message">
+        Enquiry Successful! We'll be in touch soon.
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Ensure this script runs after the DOM is loaded, or place it before </body>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const navbarBg = document.getElementById('navbar-bg');
+            // Check if navbarBg exists to prevent errors if the element is removed
+            if (navbarBg) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbarBg.classList.remove('bg-white/10');
+                        navbarBg.classList.add('bg-gray-900/60', 'backdrop-blur-lg');
+                    } else {
+                        navbarBg.classList.remove('bg-gray-900/60', 'backdrop-blur-lg');
+                        navbarBg.classList.add('bg-white/10');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
 </html>
+
 
 
 
